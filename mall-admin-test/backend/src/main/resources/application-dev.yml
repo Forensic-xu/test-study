@@ -1,0 +1,9 @@
+# Optional profile: spring.profiles.active=dev
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+logging:
+  level:
+    com.mall.admin: DEBUG
