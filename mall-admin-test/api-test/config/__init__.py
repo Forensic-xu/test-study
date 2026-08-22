@@ -1,0 +1,25 @@
+"""配置包：从环境变量读取，未设置则用默认值。"""
+
+from config.settings import (
+    ADMIN_PASSWORD,
+    ADMIN_USERNAME,
+    BASE_URL,
+    DISABLED_PASSWORD,
+    DISABLED_USERNAME,
+    USER_PASSWORD,
+    USER_USERNAME,
+    USER02_PASSWORD,
+    USER02_USERNAME,
+)
+
+__all__ = [
+    "BASE_URL",
+    "ADMIN_USERNAME",
+    "ADMIN_PASSWORD",
+    "USER_USERNAME",
+    "USER_PASSWORD",
+    "USER02_USERNAME",
+    "USER02_PASSWORD",
+    "DISABLED_USERNAME",
+    "DISABLED_PASSWORD",
+]

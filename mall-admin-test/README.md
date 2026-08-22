@@ -142,7 +142,7 @@ mall-admin-test/
 
 ## 12. 常见问题
 
-- **5173 打不开**：本项目前端固定 **5176**。  
+- **Can't connect / 10061**：本机 MySQL 8.4 实际端口多为 **3307**（见服务 `MySQL84` 的 `my.ini`），Navicat 与 `DB_PORT` 需一致，不要写死 3306。  
 - **密码连不上库**：本地默认 `123456`，可用 `DB_PASSWORD` 覆盖。  
 - **401**：检查 `Authorization: Bearer <token>`。  
 - **Docker 未安装**：用本机 MySQL 手工导入 SQL 即可。

@@ -1,0 +1,11 @@
+# HTTP
+requests>=2.28.0,<3
+
+# 测试框架
+pytest>=7.4.0,<9
+
+# 环境变量（.env）
+python-dotenv>=1.0.0,<2
+
+# HTML 测试报告（后续第 8 课用）
+pytest-html>=3.2.0,<4
