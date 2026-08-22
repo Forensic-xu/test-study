@@ -56,7 +56,7 @@ doc/learning/
 | 2 | Web 功能测试 | [stage-02-web-manual](./stage-02-web-manual/00-overview.md) | 未开始 | 完整测一个模块 |
 | 3 | Postman 接口测试 | [stage-03-postman](./stage-03-postman/00-overview.md) | **进行中** | 接口测试集合 |
 | 4 | Python | [stage-04-python](./stage-04-python/00-overview.md) | 待开课 | 能写测试脚本 |
-| 5 | Pytest + Requests | [stage-05-pytest](./stage-05-pytest/00-overview.md) | 待开课 | 接口自动化框架 |
+| 5 | Pytest + Requests | [stage-05-pytest](./stage-05-pytest/00-overview.md) | **进行中（第 6 课待开）** | 接口自动化框架 |
 | 6 | Selenium | [stage-06-selenium](./stage-06-selenium/00-overview.md) | 未开始 | UI 自动化框架 |
 | 7 | JMeter | [stage-07-jmeter](./stage-07-jmeter/00-overview.md) | 未开始 | 性能测试项目 |
 | 8 | MeterSphere | [stage-08-metersphere](./stage-08-metersphere/00-overview.md) | 未开始 | 企业测试平台实践 |
@@ -71,10 +71,10 @@ doc/learning/
 
 | 项 | 内容 |
 |----|------|
-| **当前阶段** | 阶段 3 · Postman（收尾）→ 即将进入阶段 4/5 |
-| **Postman** | 第 1～7 课完成；第 8 课进行中；第 9～10 课未开始 |
-| **下一步** | ① 完成 Postman 第 8 课剩余练习；② 开始阶段 4 Python / 阶段 5 Pytest |
-| **用户意向** | 已表达想学 Python 接口自动化 |
+| **Postman** | 第 1～7 课完成；第 8 课进行中 |
+| **Pytest** | 第 1～5 课完成；**28 passed**；下次第 6 课 |
+| **Git 备份** | `push-backup.bat` 已推 GitHub |
+| **续课** | `@doc/learning/记忆.md` |
 
 详见 → [`progress.md`](./progress.md) · [`记忆.md`](./记忆.md)
 

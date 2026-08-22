@@ -1,8 +1,8 @@
-"""库存相关测试数据。"""
+# 库存测试数据
 
-DEFAULT_PRODUCT_ID = 1
+DEFAULT_PRODUCT_ID = 1  # 种子数据里一般有这个商品
 
-# 非法 quantity → 400 / 90001（@Min(1) 参数校验）
+# quantity 填 0 或负数：走的是参数校验，code 是 90001（不是 50001）
 INVALID_QUANTITY_CASES = [
     {
         "case_id": "zero_quantity",
@@ -18,7 +18,7 @@ INVALID_QUANTITY_CASES = [
     },
 ]
 
-# 正常增减场景：(action, delta)
+# 先加 10 再减 5，测完会改数据库里的库存（本地练习无所谓）
 INVENTORY_CHANGE_SUCCESS_CASES = [
     {"case_id": "increase_10", "action": "increase", "delta": 10},
     {"case_id": "decrease_5", "action": "decrease", "delta": 5},

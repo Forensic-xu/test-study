@@ -1,4 +1,5 @@
-"""商品相关接口封装。"""
+# 商品接口：查列表、查详情
+# 都要带 token，第一个参数传 admin_token 或 user_token
 
 from typing import Any, Dict, Optional
 
@@ -17,13 +18,12 @@ def list_products(
     status: Optional[str] = None,
     **kwargs,
 ) -> requests.Response:
-    """GET /api/products"""
     url = f"{BASE_URL}/api/products"
     params: Dict[str, Any] = {"page": page, "size": size}
     if name is not None:
         params["name"] = name
     if category_id is not None:
-        params["categoryId"] = category_id
+        params["categoryId"] = category_id  # 注意：接口用驼峰 categoryId
     if status is not None:
         params["status"] = status
     return requests.get(
@@ -36,7 +36,6 @@ def list_products(
 
 
 def get_product(token: str, product_id: int, **kwargs) -> requests.Response:
-    """GET /api/products/{id}"""
     url = f"{BASE_URL}/api/products/{product_id}"
     return requests.get(
         url,

@@ -1,4 +1,6 @@
-"""登录相关测试数据（参数化用例，数据与代码分离）。"""
+# 登录失败场景 — 数据放这里，test_auth.py 用参数化一条逻辑跑完
+#
+# case_id 会显示在 pytest 报告里，比如 [wrong_password]
 
 LOGIN_ERROR_CASES = [
     {

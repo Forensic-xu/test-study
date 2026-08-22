@@ -1,4 +1,7 @@
-"""HTTP 客户端封装：统一带 Token 发请求。"""
+# 带 Token 的请求客户端
+#
+# 有了它，用例里不用每次写 headers={"Authorization": "Bearer xxx"}
+# 直接 client.get("/api/products") 就行。
 
 from typing import Any, Dict, Optional
 
@@ -9,7 +12,6 @@ from config.settings import BASE_URL, REQUEST_TIMEOUT
 
 
 class ApiClient:
-    """带鉴权的 API 客户端，供 fixture 注入到用例。"""
 
     def __init__(self, token: str, session: Optional[requests.Session] = None):
         self.token = token
@@ -22,6 +24,7 @@ class ApiClient:
         return merged
 
     def request(self, method: str, path: str, **kwargs: Any) -> requests.Response:
+        # path 写 "/api/xxx" 就行，BASE_URL 在这里拼
         url = f"{BASE_URL}{path}"
         kwargs.setdefault("timeout", REQUEST_TIMEOUT)
         headers = kwargs.pop("headers", None)

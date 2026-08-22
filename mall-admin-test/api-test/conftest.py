@@ -1,7 +1,7 @@
-"""项目级 conftest：全局 fixture + 运行前检查。
-
-pytest 会自动加载本文件（位于 tests/ 的父目录）。
-"""
+# 全局 conftest：所有用例跑之前/之中要用的公共准备
+#
+# pytest 会自动找这个文件，不用 import。
+# 放这里的东西，tests/ 下每个 test_ 函数都能直接用（当参数写就行）。
 
 import pytest
 import requests
@@ -20,23 +20,24 @@ from config.settings import (
 
 
 def pytest_sessionstart(session):
-    """全部用例开始前：确认后端可访问。"""
+    # 一上来先 ping 一下后端，没启动就别白跑了
     try:
         resp = requests.get(f"{BASE_URL}/swagger-ui.html", timeout=5)
         if resp.status_code >= 500:
-            pytest.exit(f"后端不可用（HTTP {resp.status_code}）: {BASE_URL}")
+            pytest.exit(f"后端挂了（HTTP {resp.status_code}）: {BASE_URL}")
     except requests.RequestException as exc:
-        pytest.exit(f"无法连接后端 {BASE_URL}，请先启动 Spring Boot。原因: {exc}")
+        pytest.exit(f"连不上后端 {BASE_URL}，先把 Spring Boot 启起来。{exc}")
 
 
 @pytest.fixture(scope="session")
 def base_url() -> str:
+    # 等同 Postman 里的 {{base_url}}
     return BASE_URL
 
 
 @pytest.fixture(scope="session")
 def http_session():
-    """复用 TCP 连接，整个测试会话共享一个 Session。"""
+    # 整个 pytest 过程共用一个 Session，少建 TCP 连接
     session = requests.Session()
     yield session
     session.close()
@@ -44,6 +45,7 @@ def http_session():
 
 @pytest.fixture(scope="session")
 def admin_token() -> str:
+    # session 级别 = 只登录一次，后面所有用例复用
     return fetch_token(ADMIN_USERNAME, ADMIN_PASSWORD)
 
 
@@ -54,17 +56,19 @@ def user_token() -> str:
 
 @pytest.fixture(scope="session")
 def user02_token() -> str:
+    # 专门用来测「越权」：user02 动 user01 的数据
     return fetch_token(USER02_USERNAME, USER02_PASSWORD)
 
 
 @pytest.fixture(scope="session")
 def tokens(admin_token, user_token, user02_token) -> dict:
+    # 一次拿齐三个 token，省得用例里写三个参数
     return {"admin": admin_token, "user01": user_token, "user02": user02_token}
 
 
 @pytest.fixture(scope="session")
 def admin_client(admin_token, http_session) -> ApiClient:
-    """ADMIN 身份的 API 客户端。"""
+    # 带 token 的客户端，用例里直接 client.get("/api/xxx") 就行
     client = ApiClient(admin_token, session=http_session)
     yield client
     client.close()
@@ -72,7 +76,6 @@ def admin_client(admin_token, http_session) -> ApiClient:
 
 @pytest.fixture(scope="session")
 def user_client(user_token, http_session) -> ApiClient:
-    """user01 身份的 API 客户端。"""
     client = ApiClient(user_token, session=http_session)
     yield client
     client.close()
@@ -80,7 +83,6 @@ def user_client(user_token, http_session) -> ApiClient:
 
 @pytest.fixture(scope="session")
 def user02_client(user02_token, http_session) -> ApiClient:
-    """user02 身份的 API 客户端。"""
     client = ApiClient(user02_token, session=http_session)
     yield client
     client.close()

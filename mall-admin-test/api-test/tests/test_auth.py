@@ -1,4 +1,4 @@
-"""认证接口自动化测试 — 对应 Postman 第 1 课"""
+# 登录用例 — 对应 Postman 第 1 课
 
 import pytest
 
@@ -10,7 +10,7 @@ from data.accounts import LOGIN_ERROR_CASES
 
 
 def test_login_success():
-    """正确账号密码 → 200 / code=200，返回 token"""
+    # 正常登录：HTTP 200，code 200，还得有 token
     resp = login(ADMIN_USERNAME, ADMIN_PASSWORD)
     body = assert_api_success(resp)
 
@@ -21,6 +21,6 @@ def test_login_success():
 
 @pytest.mark.parametrize("case", LOGIN_ERROR_CASES, ids=case_ids(LOGIN_ERROR_CASES))
 def test_login_error_cases(case):
-    """登录失败场景：数据在 data/accounts.py，一条逻辑测多组数据"""
+    # 下面 4 组数据在 data/accounts.py，改数据不用动这里的代码
     resp = login(case["username"], case["password"])
     assert_api_error(resp, case["expected_http"], case["expected_code"])

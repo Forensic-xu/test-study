@@ -1,6 +1,6 @@
 # 第 5 课 · conftest 与项目结构
 
-**状态：进行中**  
+**状态：已完成**  
 **代码目录**：`mall-admin-test/api-test/`  
 **对应 Postman**：阶段 3 · lesson-08-orders（创建/取消流程）
 

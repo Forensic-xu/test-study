@@ -1,4 +1,6 @@
-"""订单相关接口封装。"""
+# 订单接口
+#
+# 下单用 user01；支付/发货/完成要 admin（本文件先封装了创建/查看/取消）
 
 from typing import Any, Dict, List, Optional
 
@@ -16,7 +18,7 @@ def create_order(
     remark: Optional[str] = None,
     **kwargs,
 ) -> requests.Response:
-    """POST /api/orders"""
+    # 两种下单方式：直接传 items，或传 cartItemIds / checkoutAll
     url = f"{BASE_URL}/api/orders"
     payload: Dict[str, Any] = {}
     if items is not None:
@@ -37,13 +39,11 @@ def create_order(
 
 
 def get_order(token: str, order_id: int, **kwargs) -> requests.Response:
-    """GET /api/orders/{id}"""
     url = f"{BASE_URL}/api/orders/{order_id}"
     return requests.get(url, headers=auth_headers(token), timeout=REQUEST_TIMEOUT, **kwargs)
 
 
 def list_orders(token: str, page: int = 1, size: int = 10, status: Optional[str] = None, **kwargs) -> requests.Response:
-    """GET /api/orders"""
     url = f"{BASE_URL}/api/orders"
     params: Dict[str, Any] = {"page": page, "size": size}
     if status is not None:
@@ -58,6 +58,6 @@ def list_orders(token: str, page: int = 1, size: int = 10, status: Optional[str]
 
 
 def cancel_order(token: str, order_id: int, **kwargs) -> requests.Response:
-    """PUT /api/orders/{id}/cancel"""
+    # 只有 PENDING 能取消；取消后再取消 → 409/40005
     url = f"{BASE_URL}/api/orders/{order_id}/cancel"
     return requests.put(url, headers=auth_headers(token), timeout=REQUEST_TIMEOUT, **kwargs)

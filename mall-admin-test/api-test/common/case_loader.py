@@ -1,8 +1,8 @@
-"""从 data/ 加载参数化用例的辅助函数。"""
+# 参数化用例的小工具
 
 from typing import Any, Dict, List, Sequence
 
 
 def case_ids(cases: Sequence[Dict[str, Any]], key: str = "case_id") -> List[str]:
-    """提取用例 id 列表，供 pytest ids= 使用。"""
+    # 让 pytest 报告里显示 [wrong_password] 而不是 [case0]
     return [str(case[key]) for case in cases]

@@ -1,11 +1,13 @@
-"""项目配置：优先读 .env，否则使用本地默认值。"""
+# 配置项：地址、账号、超时
+#
+# 优先读 .env，没有就用下面的默认值。
+# 改环境不用动代码，复制 .env.example 为 .env 即可。
 
 import os
 from pathlib import Path
 
 from dotenv import load_dotenv
 
-# 加载 api-test/.env（若存在）
 _ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(_ENV_PATH)
 
@@ -23,5 +25,4 @@ USER02_PASSWORD = os.getenv("USER02_PASSWORD", "User@123")
 DISABLED_USERNAME = os.getenv("DISABLED_USERNAME", "disabled")
 DISABLED_PASSWORD = os.getenv("DISABLED_PASSWORD", "User@123")
 
-# 请求超时（秒）
 REQUEST_TIMEOUT = int(os.getenv("REQUEST_TIMEOUT", "10"))
