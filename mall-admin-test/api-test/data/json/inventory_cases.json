@@ -1,0 +1,29 @@
+{
+  "default_product_id": 1,
+  "invalid_quantity_cases": [
+    {
+      "case_id": "zero_quantity",
+      "quantity": 0,
+      "expected_http": 400,
+      "expected_code": 90001
+    },
+    {
+      "case_id": "negative_quantity",
+      "quantity": -1,
+      "expected_http": 400,
+      "expected_code": 90001
+    }
+  ],
+  "change_success_cases": [
+    {
+      "case_id": "increase_10",
+      "action": "increase",
+      "delta": 10
+    },
+    {
+      "case_id": "decrease_5",
+      "action": "decrease",
+      "delta": 5
+    }
+  ]
+}
