@@ -1,5 +1,5 @@
-# 商品接口：查列表、查详情
-# 都要带 token，第一个参数传 admin_token 或 user_token
+# 商品接口：查列表、查详情、创建、删除
+# 都要带 token；写操作一般用 admin_token
 
 from typing import Any, Dict, Optional
 
@@ -43,3 +43,37 @@ def get_product(token: str, product_id: int, **kwargs) -> requests.Response:
         timeout=REQUEST_TIMEOUT,
         **kwargs,
     )
+
+
+def create_product(
+    token: str,
+    name: str,
+    category_id: int,
+    price,
+    stock: int = 0,
+    status: str = "ON_SALE",
+    description: Optional[str] = None,
+    **kwargs,
+) -> requests.Response:
+    url = f"{BASE_URL}/api/products"
+    payload: Dict[str, Any] = {
+        "name": name,
+        "categoryId": category_id,
+        "price": price,
+        "stock": stock,
+        "status": status,
+    }
+    if description is not None:
+        payload["description"] = description
+    return requests.post(
+        url,
+        headers=auth_headers(token),
+        json=payload,
+        timeout=REQUEST_TIMEOUT,
+        **kwargs,
+    )
+
+
+def delete_product(token: str, product_id: int, **kwargs) -> requests.Response:
+    url = f"{BASE_URL}/api/products/{product_id}"
+    return requests.delete(url, headers=auth_headers(token), timeout=REQUEST_TIMEOUT, **kwargs)

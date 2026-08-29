@@ -61,3 +61,21 @@ def cancel_order(token: str, order_id: int, **kwargs) -> requests.Response:
     # 只有 PENDING 能取消；取消后再取消 → 409/40005
     url = f"{BASE_URL}/api/orders/{order_id}/cancel"
     return requests.put(url, headers=auth_headers(token), timeout=REQUEST_TIMEOUT, **kwargs)
+
+
+def pay_order(token: str, order_id: int, **kwargs) -> requests.Response:
+    # ADMIN：PENDING → PAID
+    url = f"{BASE_URL}/api/orders/{order_id}/pay"
+    return requests.put(url, headers=auth_headers(token), timeout=REQUEST_TIMEOUT, **kwargs)
+
+
+def ship_order(token: str, order_id: int, **kwargs) -> requests.Response:
+    # ADMIN：PAID → SHIPPED
+    url = f"{BASE_URL}/api/orders/{order_id}/ship"
+    return requests.put(url, headers=auth_headers(token), timeout=REQUEST_TIMEOUT, **kwargs)
+
+
+def complete_order(token: str, order_id: int, **kwargs) -> requests.Response:
+    # ADMIN：SHIPPED → COMPLETED
+    url = f"{BASE_URL}/api/orders/{order_id}/complete"
+    return requests.put(url, headers=auth_headers(token), timeout=REQUEST_TIMEOUT, **kwargs)

@@ -2,7 +2,7 @@
 
 > 适合：刚接触 Pytest，会一点 Postman 的人  
 > 代码目录：`mall-admin-test/api-test/`  
-> 状态：代码已改好，需启动后端后跑 `pytest` 验证
+> 状态：已完成（2026-08-29 验收：28 passed + 故意改 JSON 验证）
 
 ---
 
@@ -175,10 +175,10 @@ cd /d D:\code\test-study\mall-admin-test\api-test
 
 ## 检查清单
 
-- [ ] 知道 `data/json/` 是干什么的  
-- [ ] 知道 `load_json` 大概干什么  
-- [ ] 后端启动后 `pytest` 能过  
-- [ ] 故意改错 JSON 能看到 FAILED，改回能过  
+- [x] 知道 `data/json/` 是干什么的  
+- [x] 知道 `load_json` 大概干什么  
+- [x] 后端启动后 `pytest` 能过  
+- [x] 故意改错 JSON 能看到 FAILED，改回能过  
 
 ---
 
