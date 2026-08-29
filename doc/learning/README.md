@@ -31,8 +31,8 @@ doc/learning/
 ├── stage-03-postman/          ← 阶段 3：Postman 接口测试（进行中）
 ├── stage-04-python/           ← 阶段 4：Python 基础（待开课）
 ├── stage-05-pytest/           ← 阶段 5：Pytest + Requests（待开课）
-├── stage-06-selenium/         ← 阶段 6：Selenium UI 自动化（待建课时）
-├── stage-07-jmeter/           ← 阶段 7：JMeter 性能测试（待建课时）
+├── stage-06-selenium/         ← 阶段 6：Selenium UI 自动化（入门 5 课 ✅）
+├── stage-07-jmeter/           ← 阶段 7：JMeter 性能测试（入门 5 课 ✅）
 ├── stage-08-metersphere/      ← 阶段 8：MeterSphere 平台（待建课时）
 ├── stage-09-jenkins/          ← 阶段 9：Jenkins CI/CD（待建课时）
 └── stage-10-resume/           ← 阶段 10：简历与面试（待建课时）
@@ -57,8 +57,8 @@ doc/learning/
 | 3 | Postman 接口测试 | [stage-03-postman](./stage-03-postman/00-overview.md) | **进行中** | 接口测试集合 |
 | 4 | Python | [stage-04-python](./stage-04-python/00-overview.md) | 待开课 | 能写测试脚本 |
 | 5 | Pytest + Requests | [stage-05-pytest](./stage-05-pytest/00-overview.md) | **进行中（第 6 课待开）** | 接口自动化框架 |
-| 6 | Selenium | [stage-06-selenium](./stage-06-selenium/00-overview.md) | 未开始 | UI 自动化框架 |
-| 7 | JMeter | [stage-07-jmeter](./stage-07-jmeter/00-overview.md) | 未开始 | 性能测试项目 |
+| 6 | Selenium | [stage-06-selenium](./stage-06-selenium/00-overview.md) | **入门 5 课 ✅** | UI 自动化框架 |
+| 7 | JMeter | [stage-07-jmeter](./stage-07-jmeter/00-overview.md) | **入门 5 课 ✅** | 性能测试项目 |
 | 8 | MeterSphere | [stage-08-metersphere](./stage-08-metersphere/00-overview.md) | 未开始 | 企业测试平台实践 |
 | 9 | Jenkins | [stage-09-jenkins](./stage-09-jenkins/00-overview.md) | 未开始 | CI/CD 自动化 |
 | 10 | 项目包装 + 面试 | [stage-10-resume](./stage-10-resume/00-overview.md) | 未开始 | 简历 + 面试话术 |

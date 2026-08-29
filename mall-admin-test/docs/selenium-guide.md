@@ -6,18 +6,22 @@
 
 ## Element Plus 输入框定位
 
-`el-input` 的 `data-testid` 在外层容器上，定位原生输入建议：
+当前项目里，`el-input` 的 `data-testid` 会落到**内部原生 `<input>`** 上，直接写：
 
 ```text
-[data-testid="login-username"] input
-[data-testid="login-password"] input
+[data-testid="login-username"]
+[data-testid="login-password"]
 ```
+
+不要写成 `[data-testid="login-username"] input`（testid 已在 input 上，再套一层会找不到）。
 
 按钮一般可直接：
 
 ```text
 [data-testid="login-submit"]
 ```
+
+> 若以后升级组件后 testid 改到外层容器，再改成 `[data-testid="..."] input`。
 
 ## 常用 data-testid
 

@@ -51,9 +51,11 @@ pytest --html=htmlreport/report.html --self-contained-html
 api-test/
 ├── conftest.py              # 全局 fixture + 后端检查
 ├── config/settings.py       # 环境配置
-├── common/                  # 断言、登录、ApiClient
+├── common/                  # 断言、登录、ApiClient、load_json
 ├── api/                     # 接口封装（auth/product/cart/order…）
-├── data/                    # 测试数据
+├── data/
+│   ├── accounts.py 等       # 数据入口（兼容 import）
+│   └── json/                # 第 6 课：用例 JSON 外置
 ├── tests/                   # 用例 test_*.py
 ├── pytest.ini
 └── requirements.txt

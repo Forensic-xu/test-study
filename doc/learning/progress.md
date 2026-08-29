@@ -1,7 +1,7 @@
 # 学习进度跟踪（全阶段）
 
 > 打勾规则：自己做通并理解后，把 `[ ]` 改成 `[x]`。  
-> 最后更新：2026-08-22（下班存档；Pytest 第 1～5 课完成，28 passed）
+> 最后更新：2026-08-29（Selenium 第 1～5 课完成）
 
 > 跨对话续课请引用：[记忆.md](./记忆.md)
 
@@ -16,9 +16,9 @@
 | 2 | Web 手工测试 | 0/5 | 未开始 |
 | 3 | Postman | 7.5/10 | **进行中** |
 | 4 | Python | 0/6（精简路线） | 与阶段 5 合并 |
-| 5 | Pytest + Requests | 5/9 | **第 6 课待开** |
-| 6 | Selenium | 0/— | 未开始 |
-| 7 | JMeter | 0/— | 未开始 |
+| 5 | Pytest + Requests | 6/9 | **第 6 课进行中** |
+| 6 | Selenium | 5/5 | ✅ 入门课完成 |
+| 7 | JMeter | 5/5 | **入门课完成** |
 | 8 | MeterSphere | 0/— | 未开始 |
 | 9 | Jenkins | 0/— | 未开始 |
 | 10 | 简历面试 | 0/— | 未开始 |
@@ -110,7 +110,7 @@
 | 02 | 列表、字典 | [ ] 未开始 |
 | 03 | if / for / while | [ ] 未开始 |
 | 04 | 函数与异常 | [ ] 未开始 |
-| 05 | JSON、模块、文件 | [ ] 未开始 |
+| 05 | JSON、模块、文件 | [x] 与 Pytest 第 6 课合并 |
 | 06 | requests 发 HTTP 请求 | [x] 与 Pytest 合并完成 |
 
 ---
@@ -126,19 +126,45 @@
 | 03 | fixture（登录 token + 多用户） | [x] 已完成 |
 | 04 | 参数化 @pytest.mark.parametrize | [x] 已完成 |
 | 05 | conftest + 目录结构 | [x] 已完成 |
-| 06 | 测试数据管理（JSON 外置） | [ ] 未开始（下次从这里） |
+| 06 | 测试数据管理（JSON 外置） | [~] 进行中 |
 | 07 | 接口关联（登录→创建→删除） | [ ] 未开始 |
 | 08 | 日志与测试报告 | [ ] 未开始 |
 | 09 | 框架封装 + 一键 pytest | [ ] 未开始 |
 
 ---
 
-## 阶段 6～10 · 预留
+## 阶段 7 · JMeter 性能测试
+
+笔记：[stage-07-jmeter/00-overview.md](./stage-07-jmeter/00-overview.md)
+
+| 课时 | 主题 | 状态 |
+|------|------|------|
+| 01 | 安装 + 第一个登录脚本 | [x] 已完成 |
+| 02 | Token 提取 + 带鉴权压测 | [x] 已完成 |
+| 03 | 商品列表并发阶梯 | [x] 已完成 |
+| 04 | 指标解读与简单报告 | [x] 已完成 |
+| 05 | setUp 只登录一次再压读接口 | [x] 已完成 |
+
+---
+
+## 阶段 6 · Selenium UI 自动化
+
+笔记：[stage-06-selenium/00-overview.md](./stage-06-selenium/00-overview.md)
+
+| 课时 | 主题 | 状态 |
+|------|------|------|
+| 01 | 第一个 test_login | [x] 已完成 |
+| 02 | 元素定位与显式等待 | [x] 已完成 |
+| 03 | test_product 商品管理 | [x] 已完成 |
+| 04 | test_order 订单流程 | [x] 已完成 |
+| 05 | Page Object 封装 | [x] 已完成 |
+
+---
+
+## 阶段 8～10 · 预留
 
 | 阶段 | 笔记 | 状态 |
 |------|------|------|
-| 6 Selenium | [stage-06-selenium/00-overview.md](./stage-06-selenium/00-overview.md) | 未开始 |
-| 7 JMeter | [stage-07-jmeter/00-overview.md](./stage-07-jmeter/00-overview.md) | 未开始 |
 | 8 MeterSphere | [stage-08-metersphere/00-overview.md](./stage-08-metersphere/00-overview.md) | 未开始 |
 | 9 Jenkins | [stage-09-jenkins/00-overview.md](./stage-09-jenkins/00-overview.md) | 未开始 |
 | 10 简历面试 | [stage-10-resume/00-overview.md](./stage-10-resume/00-overview.md) | 未开始 |
