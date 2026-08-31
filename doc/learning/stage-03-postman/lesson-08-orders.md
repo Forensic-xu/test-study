@@ -1,6 +1,6 @@
 # 第 8 课 · 下单 / 订单状态机 / 重复取消
 
-**状态：进行中（练习 1-5 已完成）**  
+**状态：✅ 已完成**  
 **Collection：** `07-Orders`
 
 ---
@@ -433,8 +433,8 @@ CANCELLED（终态）
 - [x] PUT 取消订单 → 200，状态 CANCELLED
 - [x] PUT 重复取消 → **409 / 40005**
 - [x] PUT 支付订单（ADMIN）→ 200，状态 PAID
-- [ ] PUT 发货（ADMIN）→ 200，状态 SHIPPED
-- [ ] PUT 完成订单（ADMIN）→ 200，状态 COMPLETED
-- [ ] （可选）非法状态操作 → 409
+- [x] PUT 发货（ADMIN）→ 200，状态 SHIPPED
+- [x] PUT 完成订单（ADMIN）→ 200，状态 COMPLETED
+- [x] （可选）非法状态操作 → 409 / 40007
 
 全部勾完后，回去更新 [progress.md](../progress.md) 与 [记忆.md](../记忆.md)。

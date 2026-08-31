@@ -1,6 +1,6 @@
 # 阶段 5 · Pytest + Requests 接口自动化（概览）
 
-**状态：第 7 课完成 · 第 8 课待开**  
+**状态：第 1～9 课已完成（阶段 5 收尾）**  
 **对应总计划**：`doc/测试学习计划.md` 第十三～十五章
 
 ---
@@ -29,8 +29,8 @@ Pytest 基础 → assert → fixture → 参数化 → conftest
 | 05 | conftest + 目录结构 | [lesson-05-conftest.md](./lesson-05-conftest.md) | ✅ |
 | 06 | 测试数据 JSON 外置 | [lesson-06-json-data.md](./lesson-06-json-data.md) | ✅ |
 | 07 | 接口关联（登录→创建→删除） | [lesson-07-chaining.md](./lesson-07-chaining.md) | ✅ |
-| 08 | 日志与 HTML 报告 | 待建 | ⬜ |
-| 09 | 框架封装 + 一键执行 | 待建 | ⬜ |
+| 08 | 日志与 HTML 报告 | [lesson-08-report.md](./lesson-08-report.md) | ✅ |
+| 09 | 框架封装 + 一键执行 | [lesson-09-framework.md](./lesson-09-framework.md) | ✅ |
 
 ## 产出物
 

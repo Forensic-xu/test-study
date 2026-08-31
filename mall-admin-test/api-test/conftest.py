@@ -8,6 +8,7 @@ import requests
 
 from common.auth_helper import fetch_token
 from common.http_client import ApiClient
+from common.log_config import get_logger, setup_logging
 from config.settings import (
     ADMIN_PASSWORD,
     ADMIN_USERNAME,
@@ -18,15 +19,38 @@ from config.settings import (
     USER_USERNAME,
 )
 
+logger = get_logger("conftest")
+
+
+def pytest_configure(config):
+    # 第 8 课：一启动 pytest 就打开日志（文件 + 控制台）
+    setup_logging()
+
 
 def pytest_sessionstart(session):
     # 一上来先 ping 一下后端，没启动就别白跑了
+    logger.info("检查后端: %s", BASE_URL)
     try:
         resp = requests.get(f"{BASE_URL}/swagger-ui.html", timeout=5)
         if resp.status_code >= 500:
+            logger.error("后端异常 HTTP %s", resp.status_code)
             pytest.exit(f"后端挂了（HTTP {resp.status_code}）: {BASE_URL}")
+        logger.info("后端可达 HTTP %s", resp.status_code)
     except requests.RequestException as exc:
+        logger.error("连不上后端: %s", exc)
         pytest.exit(f"连不上后端 {BASE_URL}，先把 Spring Boot 启起来。{exc}")
+
+
+def pytest_runtest_logreport(report):
+    # 每条用例跑完记一笔（只看 call 阶段，setup/teardown 不重复记）
+    if report.when != "call":
+        return
+    if report.passed:
+        logger.info("PASSED %s", report.nodeid)
+    elif report.failed:
+        logger.error("FAILED %s", report.nodeid)
+    elif report.skipped:
+        logger.warning("SKIPPED %s", report.nodeid)
 
 
 @pytest.fixture(scope="session")

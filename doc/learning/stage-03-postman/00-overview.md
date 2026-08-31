@@ -1,6 +1,6 @@
 # 阶段 3 · Postman 接口测试（概览）
 
-**状态：进行中（第 8 课收尾）**  
+**状态：✅ 入门课完成**  
 **对应总计划**：`doc/测试学习计划.md` 第七～十章
 
 ---
@@ -22,14 +22,14 @@
 | 05 | PUT / DELETE + 20007 | [lesson-05-update-delete-category.md](./lesson-05-update-delete-category.md) | ✅ |
 | 06 | 库存增减 + 超库存 | [lesson-06-inventory.md](./lesson-06-inventory.md) | ✅ |
 | 07 | 购物车 + 403 隔离 | [lesson-07-cart.md](./lesson-07-cart.md) | ✅ |
-| 08 | 订单状态机 | [lesson-08-orders.md](./lesson-08-orders.md) | 🔄 |
-| 09 | Collection Runner 串联 | `lesson-09-runner.md` | 待建 |
-| 10 | 整理导出（简历素材） | `lesson-10-export.md` | 待建 |
+| 08 | 订单状态机 | [lesson-08-orders.md](./lesson-08-orders.md) | ✅ |
+| 09 | Collection Runner 串联 | [lesson-09-runner.md](./lesson-09-runner.md) | ✅ |
+| 10 | 整理导出（简历素材） | [lesson-10-export.md](./lesson-10-export.md) | ✅ |
 
 ## 工具说明
 
-Postman 与 Apifox 概念一致（环境变量、后置脚本、Bearer）。  
-笔记里的 `pm.*` 脚本在 Apifox 兼容 Postman 语法时同样可用。
+**工具**：Postman（环境变量、Tests 脚本、Bearer、Collection Runner）。  
+笔记脚本统一用 `pm.*` 语法。
 
 ## 推荐集合结构
 

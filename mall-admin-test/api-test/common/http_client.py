@@ -3,12 +3,15 @@
 # 有了它，用例里不用每次写 headers={"Authorization": "Bearer xxx"}
 # 直接 client.get("/api/products") 就行。
 
+import logging
 from typing import Any, Dict, Optional
 
 import requests
 
 from common.assertions import auth_headers
 from config.settings import BASE_URL, REQUEST_TIMEOUT
+
+logger = logging.getLogger(__name__)
 
 
 class ApiClient:
@@ -28,12 +31,15 @@ class ApiClient:
         url = f"{BASE_URL}{path}"
         kwargs.setdefault("timeout", REQUEST_TIMEOUT)
         headers = kwargs.pop("headers", None)
-        return self.session.request(
+        resp = self.session.request(
             method,
             url,
             headers=self._merge_headers(headers),
             **kwargs,
         )
+        # 第 8 课：关键请求记一行，失败时好对照日志
+        logger.info("%s %s -> HTTP %s", method.upper(), path, resp.status_code)
+        return resp
 
     def get(self, path: str, **kwargs: Any) -> requests.Response:
         return self.request("GET", path, **kwargs)

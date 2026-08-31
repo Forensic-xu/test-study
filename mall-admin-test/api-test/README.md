@@ -32,17 +32,24 @@ copy .env.example .env
 ## 2. 运行测试
 
 ```bash
-# 全部用例
+# 一键（第 9 课，推荐）
+python run.py              # 全量
+python run.py smoke        # 冒烟 3 条
+python run.py report       # 全量 + HTML 报告
+
+# 或双击
+run_smoke.bat              # 冒烟
+run_tests.bat              # 全量 + 报告
+
+# 直接用 pytest 也行
 pytest
-
-# 冒烟用例
 pytest -m smoke
-
-# 按模块
 pytest tests/test_order.py -v
 
-# 生成 HTML 报告
+# HTML 报告
 pytest --html=htmlreport/report.html --self-contained-html
+
+# 日志：跑完后看 logs/pytest.log
 ```
 
 ## 3. 项目结构
@@ -51,12 +58,14 @@ pytest --html=htmlreport/report.html --self-contained-html
 api-test/
 ├── conftest.py              # 全局 fixture + 后端检查
 ├── config/settings.py       # 环境配置
-├── common/                  # 断言、登录、ApiClient、load_json
+├── common/                  # 断言、登录、ApiClient、load_json、log_config
 ├── api/                     # 接口封装（auth/product/cart/order…）
 ├── data/
 │   ├── accounts.py 等       # 数据入口（兼容 import）
 │   └── json/                # 第 6 课：用例 JSON 外置
 ├── tests/                   # 用例 test_*.py
+├── run.py                   # 第 9 课：一键全量/冒烟/报告
+├── run_tests.bat / run_smoke.bat
 ├── pytest.ini
 └── requirements.txt
 ```

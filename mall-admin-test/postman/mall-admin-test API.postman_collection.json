@@ -1,0 +1,1141 @@
+{
+  "info": {
+    "_postman_id": "328927e8-64c1-4194-8453-16ee42527cbd",
+    "name": "mall-admin-test API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56357701",
+    "_collection_link": "https://go.postman.co/collection/56357701-328927e8-64c1-4194-8453-16ee42527cbd?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "01-Auth",
+      "item": [
+        {
+          "name": "Login - Success",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\n\r\npm.test(\"登录成功\", function () {\r\n  pm.response.to.have.status(200);\r\n  pm.expect(json.code).to.eql(200);\r\n  pm.expect(json.data.token).to.be.a(\"string\");\r\n});\r\n\r\nif (json.data && json.data.token) {\r\n  pm.environment.set(\"token\", json.data.token);\r\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"Admin@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "02-Users",
+      "item": [
+        {
+          "name": "登录 user01",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  ""
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\npm.test(\"user01 登录成功\", function () {\r\n  pm.response.to.have.status(200);\r\n  pm.expect(json.code).to.eql(200);\r\n});\r\n// 核心：把 user01 的 token 存到环境变量 user_token\r\n// 为什么不存到 token？因为 token 里存的是 admin 的，覆盖就坏了！\r\npm.environment.set(\"user_token\", json.data.token);\r\npm.environment.set(\"user_id\", json.data.userId);\r\nconsole.log(\"✅ user01 登录成功，userId:\", json.data.userId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "    {\r\n  \"username\": \"user01\",\r\n  \"password\": \"User@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "03-Categories",
+      "item": [
+        {
+          "name": "正常创建分类",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Postman练习分类A\",\r\n  \"status\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT 改名",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE 空分类",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "有商品的分类不能删（重点）",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "04-Products",
+      "item": [
+        {
+          "name": "records 看审计流水",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "非法数量 → 400",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\npm.test(\"非法数量应被拒绝 (400)\", function () {\r\n  pm.response.to.have.status(400);\r\n  // 50001 = 业务层校验；90001 = 框架参数校验，二选一都对\r\n  pm.expect([50001, 90001]).to.include(json.code);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"quantity\": 0,\r\n  \"remark\": \"非法数量测试\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/inventory/{{product_id}}/increase",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "inventory",
+                "{{product_id}}",
+                "increase"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "05-Inventory",
+      "item": [
+        {
+          "name": "GET 查询库存",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\nconst before = pm.environment.get(\"stock_before\") * 1;\r\npm.test(\"增加库存成功\", function () {\r\n  pm.response.to.have.status(200);\r\n  pm.expect(json.code).to.eql(200);\r\n  pm.expect(json.data.stock).to.eql(before + 10);\r\n});\r\n// 更新环境里的当前库存，给下一步用\r\npm.environment.set(\"stock_before\", json.data.stock);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"quantity\": 10,\r\n  \"remark\": \"练习-补货10件\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/inventory/{{product_id}}/increase",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "inventory",
+                "{{product_id}}",
+                "increase"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "decrease 减少库存",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\nconst before = pm.environment.get(\"stock_before\") * 1;\r\npm.test(\"减少库存成功\", function () {\r\n  pm.response.to.have.status(200);\r\n  pm.expect(json.code).to.eql(200);\r\n  pm.expect(json.data.stock).to.eql(before - 5);\r\n});\r\n// 更新环境里的当前库存\r\npm.environment.set(\"stock_before\", json.data.stock);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"quantity\": 5,\r\n  \"remark\": \"练习-卖出5件\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/inventory/{{product_id}}/decrease",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "inventory",
+                "{{product_id}}",
+                "decrease"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "测试超库存错误",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"quantity\":9999,\r\n    \"remark\":\"测试库存超限\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/inventory/{{product_id}}/decrease",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "inventory",
+                "{{product_id}}",
+                "decrease"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "06-Cart",
+      "item": [
+        {
+          "name": "登录 user01",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\npm.test(\"user01 登录成功\", function () {\r\n  pm.response.to.have.status(200);\r\n  pm.expect(json.code).to.eql(200);\r\n});\r\n// 核心：把 user01 的 token 存到环境变量 user_token\r\n// 为什么不存到 token？因为 token 里存的是 admin 的，覆盖就坏了！\r\npm.environment.set(\"user_token\", json.data.token);\r\npm.environment.set(\"user_id\", json.data.userId);\r\nconsole.log(\"✅ user01 登录成功，userId:\", json.data.userId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"user01\",\r\n  \"password\": \"User@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST 添加商品到购物车",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\npm.test(\"加入购物车成功\", function () {\r\n  pm.response.to.have.status(200);\r\n  pm.expect(json.code).to.eql(200);\r\n  pm.expect(json.data.productId).to.eql(1);\r\n  // 因为已有记录会合并，所以断言 quantity >= 3 而不是 == 3\r\n  pm.expect(json.data.quantity).to.be.at.least(3);\r\n  pm.expect(json.data.userId).to.eql(2);\r\n});\r\npm.environment.set(\"cart_item_id\", json.data.id);\r\nconsole.log(\"🛒 购物车项ID:\", json.data.id);\r\nconsole.log(\"🛒 当前数量:\", json.data.quantity);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"productId\": 1,\r\n  \"quantity\": 3\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/cart",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET 查看购物车列表",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/cart",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT 修改购物车数量",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"quantity\": 6\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/cart/{{cart_item_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "cart",
+                "{{cart_item_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE 删除购物车项",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/cart/{{cart_item_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "cart",
+                "{{cart_item_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "故意越权",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\npm.test(\"越权删除应被拒绝 (403)\", function () {\r\n  // 1. HTTP 必须是 403 Forbidden\r\n  pm.response.to.have.status(403);\r\n  // 2. 业务码必须是 30004\r\n  pm.expect(json.code).to.eql(30004);\r\n  // 3. 错误信息\r\n  pm.expect(json.message).to.include(\"无权\");\r\n});\r\nconsole.log(\"🔒 越权被正确拦截！\");"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/cart/{{cart_item_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "cart",
+                "{{cart_item_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "超库存数量校验",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{user_token}}",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "07-Orders",
+      "item": [
+        {
+          "name": "POST 创建订单",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"cartItemIds\": [1],\r\n  \"remark\": \"练习下单\"\r\n}   ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET 查看订单",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\npm.test(\"查看订单成功\", function () {\r\n  pm.response.to.have.status(200);\r\n  pm.expect(json.code).to.eql(200);\r\n  pm.expect(json.data.id).to.eql(pm.environment.get(\"order_id\") * 1);\r\n  pm.expect(json.data.status).to.eql(\"PENDING\");\r\n  pm.expect(json.data.items).to.be.an(\"array\");\r\n});\r\nconsole.log(\"📦 订单详情:\", json.data.orderNo, \"状态:\", json.data.status, \"金额:\", json.data.totalAmount);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/orders/{{order_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{order_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "取消订单",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\npm.test(\"取消订单成功\", function () {\r\n  pm.response.to.have.status(200);\r\n  pm.expect(json.code).to.eql(200);\r\n  pm.expect(json.data.status).to.eql(\"CANCELLED\");\r\n  pm.expect(json.data.id).to.eql(pm.environment.get(\"order_id\") * 1);\r\n});\r\nconsole.log(\"🗑️ 订单已取消:\", json.data.orderNo, \"→\", json.data.status);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/orders/{{order_id}}/cancel",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{order_id}}",
+                "cancel"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT 重复取消订单",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT 支付订单",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\npm.test(\"支付订单成功\", function () {\r\n  pm.response.to.have.status(200);\r\n  pm.expect(json.code).to.eql(200);\r\n  pm.expect(json.data.status).to.eql(\"PAID\");\r\n});\r\nconsole.log(\"💳 订单已支付:\", json.data.orderNo, \"→\", json.data.status);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/orders/{{order_id}}/pay",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{order_id}}",
+                "pay"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT 发货",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\npm.test(\"发货成功\", function () {\r\n  pm.response.to.have.status(200);\r\n  pm.expect(json.code).to.eql(200);\r\n  pm.expect(json.data.status).to.eql(\"SHIPPED\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/orders/{{order_id}}/ship",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{order_id}}",
+                "ship"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT 完成订单",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\npm.test(\"完成订单成功\", function () {\r\n  pm.response.to.have.status(200);\r\n  pm.expect(json.code).to.eql(200);\r\n  pm.expect(json.data.status).to.eql(\"COMPLETED\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/orders/{{order_id}}/complete",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{order_id}}",
+                "complete"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "非法状态操作 → 409",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\npm.test(\"非法状态操作应被拒 (409)\", function () {\r\n  pm.response.to.have.status(409);\r\n  // 40007 = 订单状态不允许发货\r\n  pm.expect(json.code).to.eql(40007);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/orders/{{order_id}}/ship",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{order_id}}",
+                "ship"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "bearer",
+        "bearer": [
+          {
+            "key": "token",
+            "value": "{{token}}",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "08-Smoke-Flow",
+      "item": [
+        {
+          "name": "POST 登录 admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\npm.test(\"admin 登录成功\", function () {\r\n  pm.response.to.have.status(200);\r\n  pm.expect(json.code).to.eql(200);\r\n  pm.expect(json.data.token).to.be.a(\"string\");\r\n});\r\npm.environment.set(\"token\", json.data.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "No Auth"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"Admin@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST 登录 user01",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\npm.test(\"user01 登录成功\", function () {\r\n  pm.response.to.have.status(200);\r\n  pm.expect(json.code).to.eql(200);\r\n});\r\npm.environment.set(\"user_token\", json.data.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "No Auth"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"user01\",\r\n  \"password\": \"User@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST 创建订单（直接购买）",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\npm.test(\"创建订单成功\", function () {\r\n  pm.response.to.have.status(200);\r\n  pm.expect(json.code).to.eql(200);\r\n  pm.expect(json.data.status).to.eql(\"PENDING\");\r\n  pm.expect(json.data.id).to.be.a(\"number\");\r\n});\r\npm.environment.set(\"order_id\", json.data.id);\r\nconsole.log(\"📦 smoke order_id =\", json.data.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{user_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"items\": [\r\n    {\r\n      \"productId\": 1,\r\n      \"quantity\": 1\r\n    }\r\n  ],\r\n  \"remark\": \"Runner 冒烟\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT 支付订单",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\npm.test(\"支付成功\", function () {\r\n  pm.response.to.have.status(200);\r\n  pm.expect(json.code).to.eql(200);\r\n  pm.expect(json.data.status).to.eql(\"PAID\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/orders/{{order_id}}/pay",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{order_id}}",
+                "pay"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT 发货",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\npm.test(\"发货成功\", function () {\r\n  pm.response.to.have.status(200);\r\n  pm.expect(json.code).to.eql(200);\r\n  pm.expect(json.data.status).to.eql(\"SHIPPED\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/orders/{{order_id}}/ship",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{order_id}}",
+                "ship"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT 完成订单",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\npm.test(\"完成订单成功\", function () {\r\n  pm.response.to.have.status(200);\r\n  pm.expect(json.code).to.eql(200);\r\n  pm.expect(json.data.status).to.eql(\"COMPLETED\");\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{token}}"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/orders/{{order_id}}/complete",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{order_id}}",
+                "complete"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET 确认订单终态",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();\r\npm.test(\"订单终态为 COMPLETED\", function () {\r\n  pm.response.to.have.status(200);\r\n  pm.expect(json.data.status).to.eql(\"COMPLETED\");\r\n  pm.expect(json.data.id).to.eql(pm.environment.get(\"order_id\") * 1);\r\n});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/orders/{{order_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{order_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{user_token}}",
+        "type": "string"
+      }
+    ]
+  }
+}
