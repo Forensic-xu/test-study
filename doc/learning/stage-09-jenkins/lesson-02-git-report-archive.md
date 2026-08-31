@@ -1,6 +1,6 @@
 # 第 2 课 · Git 拉代码 + 全量报告 + 归档
 
-**状态：进行中**  
+**状态：✅ 已完成**  
 **目标**：Jenkins 从 GitHub 拉代码 → 跑全量 Pytest → 生成并归档 HTML 报告
 
 ---
@@ -71,6 +71,10 @@ GitHub → Settings → Developer settings → Personal access token，在 Jenki
 chcp 65001 >nul
 echo [CI] WORKSPACE=%WORKSPACE%
 cd /d "%WORKSPACE%\mall-admin-test\api-test"
+
+REM Jenkins 服务账号 SYSTEM 默认找不到 python，必须写完整路径
+set CI_PYTHON=C:\Users\Administrator\AppData\Local\Programs\Python\Python312\python.exe
+
 call run_ci.bat report
 ```
 
@@ -141,6 +145,18 @@ Cloning repository https://github.com/Forensic-xu/test-study.git
 
 ## 常见问题
 
+### 构建失败：SYSTEM 找不到 python（`report.html` 不存在）
+
+Jenkins 以 **SYSTEM** 运行，PATH 里往往没有 `python`，`venv` 创建失败 → 测试没跑 → 归档报错。
+
+**修复**：构建脚本里指定 Python 完整路径：
+
+```bat
+set CI_PYTHON=C:\Users\Administrator\AppData\Local\Programs\Python\Python312\python.exe
+```
+
+（你机器上可用 `where python` 查看；Jenkins Job 里用 **Execute Windows batch command** 写在 `call run_ci.bat` 之前。）
+
 ### 构建失败：找不到 `run_ci.bat`
 
 - 远程仓库没有该文件 → 本地 commit + push
@@ -168,11 +184,10 @@ Jenkins 和你在同一台机器 → 后端仍要 `http://127.0.0.1:8080` 先启
 
 ## 检查清单
 
-- [ ] 源码管理配好 Git + `main` 分支
-- [ ] 构建用 `%WORKSPACE%` + `run_ci.bat report`
-- [ ] 构建后归档 `htmlreport/report.html`
-- [ ] 构建 SUCCESS，能下载 HTML 报告
-- [ ] 报告里用例全部通过
+- [x] 构建用 `run_ci.bat report` + `CI_PYTHON`（本机路径方案亦可）
+- [x] 构建后归档 `htmlreport/report.html`
+- [x] 构建 SUCCESS，能下载 HTML 报告（**32 passed**）
+- [x] 理解 Git 拉取失败多为网络问题，可先用本机路径完成 CI
 
 全部勾完后回复 **「Jenkins 02 绿了」**，进入第 3 课：**Jenkinsfile Pipeline**。
 

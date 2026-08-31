@@ -1,6 +1,6 @@
 # 阶段 9 · Jenkins CI/CD（概览）
 
-**状态：进行中（第 2 课）**  
+**状态：进行中（第 3 课）**  
 **对应总计划**：`doc/测试学习计划.md` 第二十二章
 
 ---
@@ -21,8 +21,8 @@
 | 课时 | 主题 | 状态 |
 |------|------|------|
 | 01 | Jenkins 安装与第一个 Job | [lesson-01-install-first-job.md](./lesson-01-install-first-job.md) | ✅ |
-| 02 | 自动执行 Pytest + 报告归档 | [lesson-02-git-report-archive.md](./lesson-02-git-report-archive.md) | 🔄 |
-| 03 | 测试报告集成 | 待建 |
+| 02 | 自动执行 Pytest + 报告归档 | [lesson-02-git-report-archive.md](./lesson-02-git-report-archive.md) | ✅ |
+| 03 | 测试报告集成 + Jenkinsfile | [lesson-03-pipeline-jenkinsfile.md](./lesson-03-pipeline-jenkinsfile.md) | 🔄 |
 | 04 | 定时触发与通知 | 待建 |
 
 ## 产出物
