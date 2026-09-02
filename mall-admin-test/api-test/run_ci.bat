@@ -31,8 +31,13 @@ echo [CI] mode=%MODE%
 echo [CI] python=%PY%
 echo.
 
-"%PY%" -m pip install -r requirements.txt -q -i https://pypi.tuna.tsinghua.edu.cn/simple
-if errorlevel 1 exit /b 1
+echo [CI] installing dependencies (清华源, 显示进度)...
+"%PY%" -m pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple --timeout 60
+if errorlevel 1 (
+  echo [CI] ERROR: pip install failed
+  exit /b 1
+)
+echo [CI] dependencies ready
 
 "%PY%" run.py %MODE%
 exit /b %ERRORLEVEL%

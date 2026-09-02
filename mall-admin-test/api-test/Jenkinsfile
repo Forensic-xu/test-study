@@ -4,8 +4,6 @@
 // Jenkins Job 配置：
 //   类型 Pipeline
 //   Pipeline script from SCM → Git → 本仓库 main 分支
-//
-// 注意：Groovy 里反斜杠是转义符，路径必须用正斜杠 /
 
 pipeline {
     agent any
@@ -18,21 +16,8 @@ pipeline {
         stage('API Test') {
             steps {
                 dir('mall-admin-test/api-test') {
-                    bat '''
-                    chcp 65001 >nul
-                    echo === STEP1: python 可用性 ===
-                    "%CI_PYTHON%" --version
-                    echo === STEP2: 创建虚拟环境 ===
-                    if not exist ".venv1/Scripts/python.exe" (
-                      echo [CI] creating .venv1 ...
-                      "%CI_PYTHON%" -m venv .venv1
-                    )
-                    ".venv1/Scripts/python.exe" --version
-                    echo === STEP3: 安装依赖(清华源, 显示进度) ===
-                    ".venv1/Scripts/python.exe" -m pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple --timeout 60
-                    echo === STEP4: 跑测试 ===
-                    ".venv1/Scripts/python.exe" run.py report
-                    '''
+                    // 先清旧 workspace 的 .venv1（避免缓存污染），再调 run_ci.bat
+                    bat 'if exist ".venv1" rmdir /s /q ".venv1" & echo === Cleaned === & call run_ci.bat report'
                 }
             }
         }
