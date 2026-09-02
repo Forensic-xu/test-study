@@ -31,7 +31,7 @@ echo [CI] mode=%MODE%
 echo [CI] python=%PY%
 echo.
 
-"%PY%" -m pip install -r requirements.txt -q
+"%PY%" -m pip install -r requirements.txt -q -i https://pypi.tuna.tsinghua.edu.cn/simple
 if errorlevel 1 exit /b 1
 
 "%PY%" run.py %MODE%
