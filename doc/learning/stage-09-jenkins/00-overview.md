@@ -22,8 +22,8 @@
 |------|------|------|
 | 01 | Jenkins 安装与第一个 Job | [lesson-01-install-first-job.md](./lesson-01-install-first-job.md) | ✅ |
 | 02 | 自动执行 Pytest + 报告归档 | [lesson-02-git-report-archive.md](./lesson-02-git-report-archive.md) | ✅ |
-| 03 | 测试报告集成 + Jenkinsfile | [lesson-03-pipeline-jenkinsfile.md](./lesson-03-pipeline-jenkinsfile.md) | 🔄 |
-| 04 | 定时触发与通知 | 待建 |
+| 03 | Pipeline + Jenkinsfile | [lesson-03-pipeline-jenkinsfile.md](./lesson-03-pipeline-jenkinsfile.md) | ✅ |
+| 04 | 定时触发与通知 | [lesson-04-cron-notify.md](./lesson-04-cron-notify.md) | 🔄 |
 
 ## 产出物
 

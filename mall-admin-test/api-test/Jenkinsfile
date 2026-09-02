@@ -8,6 +8,11 @@
 pipeline {
     agent any
 
+    // ===== 定时触发：每 5 分钟自动跑一次（验证用，确认后可改 H 22 * * * 等）=====
+    triggers {
+        cron('H/5 * * * *')
+    }
+
     environment {
         CI_PYTHON = 'C:/Users/Administrator/AppData/Local/Programs/Python/Python312/python.exe'
     }
@@ -39,8 +44,18 @@ pipeline {
     }
 
     post {
+        always {
+            echo "=== 构建完成：${currentBuild.result} ==="
+            echo "报告地址：${env.BUILD_URL}artifact/mall-admin-test/api-test/htmlreport/report.html"
+        }
+        success {
+            echo '✅ SUCCESS — 全部用例通过！'
+        }
         failure {
-            echo '=== Build FAILED. Check console for details. ==='
+            echo '❌ FAILURE — 请检查控制台日志！'
+        }
+        unstable {
+            echo '⚠️ UNSTABLE — 有用例失败但构建没挂'
         }
     }
 }
