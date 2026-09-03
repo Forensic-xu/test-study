@@ -1,6 +1,6 @@
 # 第 3 课 · Jenkinsfile Pipeline
 
-**状态：进行中**  
+**状态：✅ 已完成（构建 #2 SUCCESS）**  
 **目标**：把构建步骤写进 **Jenkinsfile**，用 Pipeline 任务跑通全量测试 + 归档报告
 
 ---
