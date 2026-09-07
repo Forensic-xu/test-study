@@ -1,6 +1,6 @@
 # 阶段 8 · MeterSphere 测试平台（概览）
 
-**状态：未开始**  
+**状态：进行中（第 1 课）**  
 **对应总计划**：`doc/测试学习计划.md` 第二十一章
 
 ---
@@ -13,24 +13,34 @@
 
 - 接口定义与场景编排
 - 导入 Postman 集合
-- 关联 Pytest / JMeter
+- 关联 Pytest / JMeter（了解即可）
 - 测试计划与报告
 
-## 计划课时（待建）
+## 计划课时
 
-| 课时 | 主题 | 状态 |
-|------|------|------|
-| 01 | MeterSphere 安装与项目创建 | 待建 |
-| 02 | 导入 mall-admin-test 接口 | 待建 |
-| 03 | 场景编排与定时执行 | 待建 |
-| 04 | 报告与团队协作 | 待建 |
+| 课时 | 主题 | 笔记 | 状态 |
+|------|------|------|------|
+| 01 | MeterSphere 安装与项目创建 | [lesson-01-install-project.md](./lesson-01-install-project.md) | 🔄 进行中 |
+| 02 | 导入 mall-admin-test 接口 | （待建） | 待建 |
+| 03 | 场景编排与定时执行 | （待建） | 待建 |
+| 04 | 报告与团队协作 | （待建） | 待建 |
 
 ## 产出物
 
-- MeterSphere 中的 mall-admin-test 测试项目
+- MeterSphere 中的 `mall-admin-test` 测试项目
+- 导入后的接口 / 场景（第 2～3 课）
 
 ## 前置条件
 
-- 阶段 3 Postman 集合
+- 阶段 3 Postman 集合（已有：`mall-admin-test/postman/`）
 - 阶段 5 Pytest 框架（可选）
 - 阶段 7 JMeter 脚本（可选）
+- 本机可装 **Docker Desktop + WSL2**（MeterSphere 用容器跑）
+
+## 本机端口（与 Jenkins 对齐）
+
+| 服务 | 端口 |
+|------|------|
+| 后端 | 8080 |
+| Jenkins | 8081 |
+| MeterSphere | **8082** |

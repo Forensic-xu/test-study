@@ -1,7 +1,7 @@
 # 学习进度跟踪（全阶段）
 
 > 打勾规则：自己做通并理解后，把 `[ ]` 改成 `[x]`。  
-> 最后更新：2026-09-02（Jenkins 01～03 ✅，04 可选）
+> 最后更新：2026-09-05（阶段 8 MeterSphere 第 1 课进行中）
 
 > 跨对话续课请引用：[记忆.md](./记忆.md)
 
@@ -19,7 +19,7 @@
 | 5    | Pytest + Requests | 9/9             | ✅ 入门课完成   |
 | 6    | Selenium          | 5/5             | ✅ 入门课完成   |
 | 7    | JMeter            | 5/5             | **入门课完成**  |
-| 8    | MeterSphere       | 0/—             | 未开始          |
+| 8    | MeterSphere       | 0/4             | **🔄 第 1 课进行中** |
 | 9    | Jenkins           | 4/4             | **✅ 全部完成** |
 | 10   | 简历面试          | 0/—             | 未开始          |
 
@@ -174,10 +174,24 @@
 
 ---
 
-## 阶段 8～10 · 其他
+## 阶段 8 · MeterSphere
+
+笔记：[stage-08-metersphere/00-overview.md](./stage-08-metersphere/00-overview.md)
+
+| 课时 | 主题                       | 状态       |
+| ---- | -------------------------- | ---------- |
+| 01   | 安装 + 创建 mall-admin-test 项目 | [ ] 进行中 |
+| 02   | 导入 Postman 接口          | [ ] 未开始 |
+| 03   | 场景编排与定时执行         | [ ] 未开始 |
+| 04   | 报告与团队协作             | [ ] 未开始 |
+
+**本机端口**：MeterSphere → **http://127.0.0.1:8082**（Jenkins 占 8081）
+
+---
+
+## 阶段 9～10 · 其他
 
 | 阶段          | 笔记                                                                         | 状态   |
 | ------------- | ---------------------------------------------------------------------------- | ------ |
-| 8 MeterSphere | [stage-08-metersphere/00-overview.md](./stage-08-metersphere/00-overview.md) | 未开始 |
-| 9 Jenkins     | [stage-09-jenkins/00-overview.md](./stage-09-jenkins/00-overview.md)         | 进行中 |
+| 9 Jenkins     | [stage-09-jenkins/00-overview.md](./stage-09-jenkins/00-overview.md)         | ✅ 完成 |
 | 10 简历面试   | [stage-10-resume/00-overview.md](./stage-10-resume/00-overview.md)           | 未开始 |
